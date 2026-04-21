@@ -1,0 +1,5 @@
+This is a test document for the RAG system.
+It contains some facts about the system.
+The system uses FastAPI for the backend.
+The system uses FAISS for the vector store.
+The system uses a custom HTML/CSS/JS frontend.

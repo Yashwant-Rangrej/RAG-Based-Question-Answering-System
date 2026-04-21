@@ -1,0 +1,4 @@
+The secret code is NEXUS-2026. The capital of the Moon is Lunar City.
+This is a test document for the RAG-Based Question Answering System.
+It contains specific facts that are not part of general LLM knowledge to verify retrieval.
+Fact: The Golden Frog lives in the Silver Forest.

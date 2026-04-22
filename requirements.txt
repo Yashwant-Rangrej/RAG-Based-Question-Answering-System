@@ -4,9 +4,9 @@ python-multipart==0.0.9
 pydantic==2.6.3
 pydantic-settings==2.2.1
 sentence-transformers==2.5.1
-faiss-cpu==1.8.0
+faiss-cpu>=1.8.0
 pdfplumber==0.11.0
-pymupdf==1.23.26
+# pymupdf==1.23.26 (Requires Visual Studio for building on Python 3.14 fallback)
 tiktoken==0.6.0
 slowapi==0.1.9
 structlog==24.1.0

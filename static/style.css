@@ -228,22 +228,6 @@ h1, h2, h3 {
     border-radius: 12px 12px 4px 12px;
 }
 
-.sources {
-    margin-top: 1rem;
-    padding-top: 1rem;
-    border-top: 1px solid var(--border-color);
-}
-
-.source-tag {
-    display: inline-block;
-    padding: 0.2rem 0.5rem;
-    background: rgba(255, 255, 255, 0.1);
-    border-radius: 4px;
-    font-size: 0.75rem;
-    margin-right: 0.5rem;
-    cursor: help;
-}
-
 /* Input Area */
 .chat-input-area {
     padding: 2rem;

@@ -30,6 +30,7 @@ const elements = {
 };
 
 let currentAbortController = null;
+let messageCounter = 0;
 
 // Init
 function init() {
@@ -243,7 +244,6 @@ async function handleChatSubmit(e) {
                     // Handle sources (first chunk)
                     if (data.sources && !hasSources) {
                         content.innerHTML = ''; // Remove skeleton
-                        renderSources(content, data.sources);
                         const answerText = document.createElement('div');
                         answerText.className = 'text';
                         content.appendChild(answerText);
@@ -265,7 +265,6 @@ async function handleChatSubmit(e) {
                     // Handle direct answer (non-streaming fallback)
                     if (data.answer) {
                         content.innerHTML = `<div class="text">${data.answer.replace(/\n/g, '<br>')}</div>`;
-                        if (data.sources) renderSources(content, data.sources);
                     }
 
                 } catch (e) {
@@ -290,22 +289,7 @@ async function handleChatSubmit(e) {
     }
 }
 
-function renderSources(container, sources) {
-    if (!sources || sources.length === 0) return;
-    const sourceDiv = document.createElement('div');
-    sourceDiv.className = 'sources';
-    sourceDiv.style.marginBottom = '1rem';
-    sourceDiv.innerHTML = '<strong>Grounded in:</strong><br>';
-    
-    sources.forEach((src) => {
-        const span = document.createElement('span');
-        span.className = 'source-tag';
-        span.title = src.text;
-        span.innerText = `Chunk ${src.chunk_index} (${Math.round(src.similarity_score * 100)}%)`;
-        sourceDiv.appendChild(span);
-    });
-    container.prepend(sourceDiv);
-}
+
 
 function clearChat() {
     elements.chatMessages.innerHTML = '';
@@ -386,7 +370,7 @@ function selectDocument(docId) {
 }
 
 function addMessage(content, role) {
-    const id = Date.now();
+    const id = ++messageCounter;
     const messageDiv = document.createElement('div');
     messageDiv.className = `message ${role}`;
     messageDiv.id = `msg-${id}`;

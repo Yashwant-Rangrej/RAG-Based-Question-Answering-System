@@ -203,6 +203,7 @@ async function handleChatSubmit(e) {
         <div class="skeleton-container">
             <div class="skeleton skeleton-text"></div>
             <div class="skeleton skeleton-text"></div>
+            <div class="skeleton skeleton-text"></div>
             <div class="skeleton skeleton-text short"></div>
         </div>
     `;
@@ -243,18 +244,14 @@ async function handleChatSubmit(e) {
                     
                     // Handle sources (first chunk)
                     if (data.sources && !hasSources) {
-                        content.innerHTML = ''; // Remove skeleton
-                        const answerText = document.createElement('div');
-                        answerText.className = 'text';
-                        content.appendChild(answerText);
+                        // We no longer remove skeleton here to avoid flash
                         hasSources = true;
                     }
 
                     // Handle individual tokens
                     if (data.token) {
-                        if (!hasSources) {
+                        if (content.querySelector('.skeleton-container')) {
                              content.innerHTML = '<div class="text"></div>';
-                             hasSources = true;
                         }
                         const textDiv = content.querySelector('.text');
                         fullAnswer += data.token;

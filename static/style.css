@@ -199,7 +199,12 @@ h1, h2, h3 {
 
 .message.user {
     align-self: flex-end;
-    justify-content: flex-end;
+    flex-direction: row-reverse;
+}
+
+.message.ai {
+    align-self: flex-start;
+    flex-direction: row;
 }
 
 .message-content {
@@ -213,12 +218,14 @@ h1, h2, h3 {
 .message.ai .message-content {
     background: rgba(255, 255, 255, 0.05);
     border-left: 4px solid var(--accent-blue);
+    border-radius: 4px 12px 12px 12px;
 }
 
 .message.user .message-content {
     background: var(--accent-blue);
     color: white;
     border: none;
+    border-radius: 12px 12px 4px 12px;
 }
 
 .sources {

@@ -58,6 +58,14 @@ function init() {
     elements.chatForm.onsubmit = handleChatSubmit;
     elements.userInput.oninput = () => elements.sendBtn.disabled = !elements.userInput.value.trim();
     elements.clearBtn.onclick = clearChat;
+    
+    // Add document selection handler
+    elements.docList.onclick = (e) => {
+        const item = e.target.closest('.doc-item');
+        if (item && item.classList.contains('ready')) {
+            selectDocument(item.id.replace('doc-', ''));
+        }
+    };
     elements.stopBtn.onclick = () => {
         if (currentAbortController) {
             currentAbortController.abort();
@@ -202,7 +210,11 @@ async function handleChatSubmit(e) {
         const response = await apiRequest('/ask', {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ query, top_k: 5 }),
+            body: JSON.stringify({ 
+                query, 
+                top_k: 5,
+                document_id: config.currentDocId 
+            }),
             signal: currentAbortController.signal
         });
 
@@ -348,8 +360,28 @@ function updateDocStatus(docId, status) {
     if (docDiv) {
         const statusSpan = docDiv.querySelector('.status');
         statusSpan.innerText = status;
-        if (status === 'ready') docDiv.classList.add('ready');
+        if (status === 'ready') {
+            docDiv.classList.add('ready');
+            // If no document selected, select the first ready one (latest)
+            if (!config.currentDocId) selectDocument(docId);
+        }
         if (status === 'failed') docDiv.classList.add('error');
+    }
+}
+
+function selectDocument(docId) {
+    // Unselect previous
+    document.querySelectorAll('.doc-item').forEach(el => el.classList.remove('active'));
+    
+    const docDiv = document.getElementById(`doc-${docId}`);
+    if (docDiv) {
+        docDiv.classList.add('active');
+        config.currentDocId = docId;
+        const filename = docDiv.querySelector('.name').innerText;
+        document.getElementById('current-context').innerText = `Context: ${filename}`;
+    } else {
+        config.currentDocId = null;
+        document.getElementById('current-context').innerText = 'Context: Full Library';
     }
 }
 

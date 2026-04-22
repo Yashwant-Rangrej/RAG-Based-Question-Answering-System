@@ -16,7 +16,7 @@ from pydantic_settings import BaseSettings, SettingsConfigDict
 
 class Settings(BaseSettings):
     # --- API Security ---
-    API_KEY: str = "dev-secret-key-change-me"
+    API_KEY: str = "dev-secret-key-12345"
 
     # --- CORS ---
     CORS_ORIGINS: list[str] = ["*"]
